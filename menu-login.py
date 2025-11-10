@@ -205,8 +205,6 @@ def daftar() -> None:
         daftar()
     elif jawaban['mode'] == 'Menu Review':
         review()
-    
-
 
 def catat() -> None:
     while True:
