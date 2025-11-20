@@ -4,9 +4,33 @@ from pack_admin.daftar_kota import *
 from pack_member.program_rute import *
 from file_data.akun import *
 
+kecepatan_kendaraan = {
+    "Motor": 60,
+    "Mobil": 50,
+    "Bus": 40,
+    "Kapal": 40,
+    "Pesawat": 800
+}
+
 
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
+    
+  
+def menu_kendaraan():
+    jenis_kendaraan = [
+        inquirer.List("kendaraan",
+                      message = "Pilih Salah Satu Kendaraan Yand Akan Anda Gunakan...",
+                      choices = [
+                          "Motor",
+                          "Mobil",
+                          "Bus",
+                          "Kapal",
+                          "Pesawat"
+                      ])
+    ]
+    jawab_kendaraan = inquirer.prompt(jenis_kendaraan)
+    return jawab_kendaraan["kendaraan"]
     
     
 def menu_member():
@@ -33,15 +57,38 @@ def jalan_jalan(username):
     else:
         kota_1 = kota_akhir
         print(f"Kamu sekarang berada di: {kota_1}")
-
+        
+    kendaraan = menu_kendaraan()
+    clear()
     kota_tujuan = pilih_kota_tujuan(kota_1, data_rute)
 
     if kota_tujuan is None:
         return
 
-    print(f"\nPerjalanan dimulai: {kota_1} → {kota_tujuan}")
-    print("Perjalanan selesai!\n")
+    rute = data_rute[kota_1]
+    jarak = None
+    for item in rute:
+        if item["rute"] == f"{kota_1}-{kota_tujuan}":
+            jarak = item["jarak_tempuh"]
+            break
 
+    if jarak is None:
+        print("Jarak tidak ditemukan!")
+        return
+
+    clear()
+    print(f"\nPerjalanan dimulai: {kota_1} → {kota_tujuan}")
+    print(f"Jarak: {jarak} km")
+    print(f"Kendaraan: {kendaraan}")
+
+    waktu_menit = hitung_waktu_tempuh(jarak, kendaraan)
+
+    print(f"Waktu tempuh: {waktu_menit} Menit")
+    print("Perjalanan sedang berlangsung...\n")
+    loading_waktu(waktu_menit)
+    input("\nTekan Enter Untuk Kembali Ke Menu Awal...")
+    clear()
+    
     simpan_kota_terakhir(username, kota_tujuan)
     print(f"Kota terakhir kamu sekarang: {kota_tujuan}")
     

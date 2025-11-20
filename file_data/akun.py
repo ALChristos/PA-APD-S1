@@ -51,6 +51,7 @@ def registrasi():
 def login_akun():
     kesempatan = 3
     while kesempatan > 0:
+        teks_mulai()
         data = baca_data_akun()
         data_laporan = baca_data_laporan()
         akun_member = data["member"]
@@ -125,7 +126,7 @@ def login_akun():
                         else:
                             return "member", member["username"]
                         
-                    else :
+                    elif password_input != member["password"] :
                         kesempatan -= 1
                         input("Password salah. Silakan tekan enter untuk coba lagi.")
                         detik3_coba_lagi()
@@ -133,6 +134,7 @@ def login_akun():
                          
         # Login akun admin
             for admin in akun_admin:
+                        
                 if username_input == admin["username"]:
                     if password_input == admin["password"]:
                         return "admin", admin["username"]
@@ -141,11 +143,13 @@ def login_akun():
                         input("Password salah. Silakan tekan enter untuk coba lagi.")
                         detik3_coba_lagi()
                         break
-            else:            
+            
+            username_terdaftar = (any(username_input == akun["username"] for akun in akun_admin) or any(username_input == akun["username"] for akun in akun_member))
+            if not username_terdaftar:         
                 print("Username tidak ditemukan/Sudah Dihapus!!\nSilakan registrasi terlebih dahulu.")
                 detik5()
                 return None, None
-                
+                  
         except ValueError as e:
             print(e)
             return None, None

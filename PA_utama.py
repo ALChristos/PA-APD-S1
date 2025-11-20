@@ -15,10 +15,11 @@ def bersih():
 data = baca_data_akun()
 
 while True:
-    teks_mulai()
+    bersih()
     jawab = inquirer_login()
     print("="*60)
     if jawab["list_login"] == "Login":
+        bersih()
         role, username = login_akun() 
         bersih()
         if role == "admin":

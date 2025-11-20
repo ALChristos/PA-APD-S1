@@ -1,1 +1,5 @@
-{"perjalanan_terakhir": {"akun1": "Samarinda", "a": "Banjarbaru"}}
+{
+    "perjalanan_terakhir": {
+        "v": "Samarinda"
+    }
+}

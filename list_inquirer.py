@@ -3,7 +3,7 @@ import inquirer
 def inquirer_login():
     login = [
         inquirer.List("list_login",
-                    message="Pilih menu...",
+                    message="Pilih Menu Ynag Tersedia...",
                     choices=[
                         "Login",
                         "Registrasi",

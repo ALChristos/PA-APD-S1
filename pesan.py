@@ -75,3 +75,17 @@ def loading():
         time.sleep(0.05)
     print()
     
+    
+def loading_waktu(waktu_menit):
+    for sisa in range(waktu_menit, -1, -5):
+        bar = "█" * (waktu_menit - sisa)
+        bar += "░" * sisa
+
+        print(f"\rWaktu Tersisa: {sisa} Menit |{bar}|", end = "\r")
+        sys.stdout.flush()
+        time.sleep(0.5)
+
+    print("\nPerjalanan selesai!\n")
+    
+
+    
