@@ -5,7 +5,7 @@ import inquirer
 def menu_admin():
     menu_awal = [
         inquirer.List("admin_menu",
-                      message = "Pilih Salah Satu Menu Yang Tersedia",
+                      message = "Pilih Salah Satu Menu Yang Tersedia...",
                       choices = [
                           "1. Mengelola Data Rute Perjalanan",
                           "2. Mengelola Laporan dan Review Pengguna Mengenai Perjalanan",
@@ -21,7 +21,7 @@ def menu_admin():
 def mengelola_rute_perjalanan():
     menu_awal = [
         inquirer.List("menu_pil1",
-                        message = "Pilih Salah Satu Menu Yang Tersedia",
+                        message = "Pilih Salah Satu Menu Yang Tersedia...",
                         choices =[
                         "1. Membuat Rute Perjalanan Baru",
                         "2. Melihat Semua Rute Perjalanan",
@@ -34,10 +34,14 @@ def mengelola_rute_perjalanan():
     return jawab_pil1
     
     
+def mengelola_laporan_review():
+    pass
+    # HARUS DI LANJUT JANGAN LUPA!!!!!!
+
 def mengelola_akun_pengguna():
     menu_awal = [
         inquirer.List("menu_pil3",
-                      message = "Pilih Salah Satu Menu Yang Tersedia",
+                      message = "Pilih Salah Satu Menu Yang Tersedia...",
                       choices = [
                           "1. Melihat Seluruh Akun Pengguna dan Menghapus Akun Pengguna",
                           "2. Mem-Banned Akun Pengguna",

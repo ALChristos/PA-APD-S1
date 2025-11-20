@@ -7,6 +7,7 @@ from list_inquirer import *
 from pack_admin.menu_admin import *
 from pack_admin.daftar_kota import *
 from pack_admin.program_menuA import *
+from pack_member.menu_member import *
 
 def bersih():
     os.system("cls" if os.name == "nt" else "clear")
@@ -14,18 +15,18 @@ def bersih():
 data = baca_data_akun()
 
 while True:
-    teks_mulai() #<-- Ada di pesan.py
-    jawab = inquirer_login() #<-- Ada di list_inquirer.py
+    teks_mulai()
+    jawab = inquirer_login()
     print("="*60)
     if jawab["list_login"] == "Login":
-        role, username = login_akun() #<-- Ada di akun.py
+        role, username = login_akun() 
         bersih()
         if role == "admin":
             tampilan_menu_admin(username)
             bersih()
             while True:
                 header_menu_admin()
-                jawab = menu_admin()  #<-- Ada di menu_admin.py
+                jawab = menu_admin()  
 
                 if jawab["admin_menu"][0] == "1":
                     detik3()
@@ -76,13 +77,24 @@ while True:
                 elif jawab["admin_menu"][0] == "4":
                     bersih()
                     break
-                      
+                    
         elif role == "member":
-            print(f"Selamat datang Member (Username: {username})!")
-            
+            tampilan_menu_member(username)
+            bersih()
+            while True:
+                header_menu_member()
+                jawab = menu_member()
+                if jawab["menu_member"][0] == "1":
+                    bersih()
+                    jalan_jalan(username)
+                elif jawab["menu_member"][0] == "2":
+                    bersih()
+                    break
+                
     elif jawab["list_login"] == "Registrasi":
         registrasi()  
         bersih()
     elif jawab["list_login"] == "Keluar":
+        bersih()
         print("Terima kasih telah menggunakan aplikasi ini. Sampai jumpa!")
         break

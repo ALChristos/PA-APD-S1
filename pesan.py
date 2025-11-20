@@ -11,19 +11,35 @@ def teks_mulai():
 
 def tampilan_menu_admin(username):
     print("="*50) 
-    print("👑 Selamat Datang, Admin! 👑") 
+    print(" Selamat Datang, Admin! ") 
     print(f"Username Akun: {username}") 
     print(f"Login Berhasil: {time.strftime("%d %B %Y %H:%M:%S")}") 
     print("="*50) 
     loading()
     
-    
 def header_menu_admin():
     print("="*46) 
-    print("\t👑 Ini Menu Admin! 👑")
+    print("\t Ini Menu Admin! ")
     print(" Silahkan Pilih Salah Satu Menu Yang Tersedia") 
     print("="*46) 
     
+
+
+def tampilan_menu_member(username):
+    print("="*50) 
+    print(f" Selamat Datang, {username}! ") 
+    print(f"Username Akun: {username}") 
+    print(f"Login Berhasil: {time.strftime("%d %B %Y %H:%M:%S")}") 
+    print("="*50) 
+    loading()
+    
+def header_menu_member():
+    print("="*46) 
+    print("\t Ini Menu Member! ")
+    print(" Silahkan Pilih Salah Satu Menu Yang Tersedia") 
+    print("="*46) 
+    
+   
     
 def detik3_coba_lagi():
     for i in range(3, 0, -1):
