@@ -1,9 +1,9 @@
 import os
 import inquirer
-from create_review import catat
-from read_review import daftar
-from update_review import update
-from delate_review import hapus
+from review.create_review import catat
+from review.read_review import daftar
+from review.update_review import update
+from review.delate_review import hapus
 
 def review() -> None:
     while True:
