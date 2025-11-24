@@ -1,5 +1,6 @@
 import os
 import inquirer
+from file_data.akun import login_akun
 from review.create_review import catat
 from review.read_review import daftar
 from review.update_review import update
@@ -26,7 +27,6 @@ def review() -> None:
         ]
         
         jawaban = inquirer.prompt(pertanyaan)
-        
 
         if jawaban['menu'] == 'Lihat Review Kota Ini':
             daftar()
@@ -39,4 +39,3 @@ def review() -> None:
         elif jawaban['menu'] == 'Selesai':
             if Menu_utama():
                 break
-                    
