@@ -1,6 +1,6 @@
 import os
 import inquirer
-from review import review
+from review.review import review
 
 def daftar() -> None:
     os.system('cls' if os.name == 'nt' else 'clear')

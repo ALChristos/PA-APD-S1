@@ -17,7 +17,7 @@ def update() -> None:
             
             print("\nDaftar Perjalanan:")
             print("-" * 100)
-            print(f"{'No':<4} {'Nama Perjalanan':<25} {'Destinasi':<20} {'Tanggal':<12} {'Durasi':<10} {'Budget':<15}")
+            print(f"{'No':<4} {'Nama Perjalanan':<25} {'Destinasi':<20} {'Tanggal':<12} {'Durasi':<10} {'Budget':<15} {'Rating':<15}")
             print("-" * 100)
             
             for nomor, idx in enumerate(perjalanan_saya, start=1):
@@ -25,7 +25,8 @@ def update() -> None:
                       f"{daftar_perjalanan['Destinasi'][idx]:<20} "
                       f"{daftar_perjalanan['Tanggal'][idx]:<12} "
                       f"{daftar_perjalanan['Durasi'][idx]:<10} "
-                      f"Rp {daftar_perjalanan['Budget'][idx]:<12}")
+                      f"Rp {daftar_perjalanan['Budget'][idx]:<12}"
+                      f"{daftar_perjalanan['Rating'][idx]:<15}")
             print("-" * 100)
             
             pilih_edit = input("\nPilih nomor perjalanan yang mau diedit (atau ketik 'batal'): ").strip()
