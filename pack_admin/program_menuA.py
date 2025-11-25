@@ -121,8 +121,71 @@ def melihat_rute_perjalanan():
     clear()
 
 
-def menghapus_rute_perjalanan(): ########
-    pass    
+def menghapus_rute_perjalanan():
+    data = baca_data_perjalanan()          
+    rute = data["rute_perjalanan"]   
+
+    if len(rute) < 1:
+        print("Belum Ada Rute Perjalanan Yang Tersedia!!")
+        input("Silahkan Tekan Enter Untuk Kembali Ke Menu Mengelola Rute...")
+        clear()
+        return
+
+    while True:
+        print("=== DAFTAR RUTE PERJALANAN ===")
+        for r in rute:
+            print(f"ID: {r['id']} | Dari: {r['dari']} | Ke: {r['ke']} | Waktu: {r['waktu']} | Harga: {r['harga']}")
+
+        pilihan = input("\nMasukkan ID Rute Yang Ingin Dihapus: ").strip()
+
+        try:
+            pilihan = int(pilihan)
+            pilih_rute = next((i for i in rute if int(i["id"]) == pilihan), None)
+
+            if pilih_rute is None:
+                print("\nID tidak ditemukan!")
+                input("Tekan Enter untuk ulangi...")
+                clear()
+                continue
+
+            else:
+                while True:
+                    konfirmasi = input(
+                        f"Apakah Anda Yakin Ingin Menghapus Rute Dari {pilih_rute['dari']} Ke {pilih_rute['ke']}? (Y/N): "
+                    ).strip().lower()
+
+                    if konfirmasi == "y":
+                        index = rute.index(pilih_rute)
+                        rute.pop(index)
+
+                        with open("file_data/data_perjalanan.json", "w") as file:
+                            json.dump(data, file, indent=4)
+
+                        print("Rute Berhasil Dihapus!!")
+                        input("\nTekan Enter Untuk Kembali Ke Menu Mengelola Rute...")
+                        detik3()
+                        clear()
+                        return
+
+                    elif konfirmasi == "n":
+                        print("Rute Tidak Jadi Dihapus...")
+                        input("\nTekan Enter Untuk Kembali Ke Menu Mengelola Rute...")
+                        detik3()
+                        clear()
+                        return
+
+                    else:
+                        print("\nMasukkan pilihan Y atau N!")
+                        input("Tekan Enter Untuk Menginput Ulang...")
+                        clear()
+                        continue
+
+        except ValueError:
+            print("\nInput Tidak Valid!! ID Harus Berupa Angka!!")
+            input("Tekan Enter Untuk Menginput Ulang...")
+            detik3()
+            clear()
+            continue    
    
     
 def melihat_akun_pengguna(konfirmasi_awal = False):

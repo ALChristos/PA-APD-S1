@@ -29,10 +29,10 @@ def daftar():
     else:
         os.system('cls' if os.name == 'nt' else 'clear')
         print("\n" + "=" * 60)
-        print(f"REVIEW {user_login.upper()}")
+        print(f"REVIEW {username.upper()}")
         print("=" * 60)
         for i in range(len(daftar_perjalanan["Nama"])):
-            if daftar_perjalanan["Nama"][i] == user_login:
+            if daftar_perjalanan["Nama"][i] == username:
                 perjalanan.append(i)
     
     if len(perjalanan) == 0:
