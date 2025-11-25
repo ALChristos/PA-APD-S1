@@ -3,6 +3,7 @@ from file_data.datajson import *
 from pack_admin.daftar_kota import *
 from pack_member.program_rute import *
 from file_data.akun import *
+from review.review_rute import review
 
 kecepatan_kendaraan = {
     "Motor": 60,
@@ -87,7 +88,37 @@ def jalan_jalan(username):
     print(f"Waktu tempuh: {waktu_menit} Menit")
     print("Perjalanan sedang berlangsung...\n")
     loading_waktu(waktu_menit)
-    input("\nTekan Enter Untuk Kembali Ke Menu Awal...")
+
+    pertanyaan = [
+            inquirer.List('menu',
+                         message="Apakah anda ingin memberikan review/laporan untuk kota ini?",
+                         choices=[
+                            'Ya',
+                            'Tidak'
+                         ],
+                         ),
+        ]
+    jawaban = inquirer.prompt(pertanyaan)
+    
+    if jawaban['menu'] == 'Ya':
+        pertanyaan = [
+                inquirer.List('menu',
+                            message="Pilih salah satu:",
+                            choices=[
+                                '1. Saya ingin memberikan review untuk kota ini',
+                                '2. Saya ingin memberikan laporan untuk kota ini',
+                                '3. Keluar'
+                            ],
+                            ),
+            ]
+        jawaban_pertanyaan = inquirer.prompt(pertanyaan)
+        if jawaban_pertanyaan['menu'][0] == '1':
+            review(username)
+        elif jawaban_pertanyaan['menu'][0] == '2':
+            pass
+        elif jawaban_pertanyaan['menu'][0] == '3':
+            pass
+
     clear()
     
     simpan_kota_terakhir(username, kota_tujuan)

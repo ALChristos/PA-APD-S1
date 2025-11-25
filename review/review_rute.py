@@ -1,41 +1,40 @@
 import os
 import inquirer
-from file_data.akun import login_akun
 from review.create_review import catat
 from review.read_review import daftar
 from review.update_review import update
 from review.delate_review import hapus
 
-def review() -> None:
+
+def review(username):
     while True:
         os.system('cls' if os.name == 'nt' else 'clear')
         print("=" * 60)
-        print(f"User: {login_akun}")
+        print(f"User: {username}")
         print("=" * 60)
         
         pertanyaan = [
             inquirer.List('menu',
                          message="Pilih menu utama",
                          choices=[
-                             'Lihat Review Kota Ini',
-                             'Berikan Review',
-                             'Edit Review Saya',
-                             'Hapus Review Saya',
-                             'Selesai'
+                             '1. Lihat Review Kota Ini',
+                             '2. Berikan Review',
+                             '3. Edit Review Saya',
+                             '4. Hapus Review Saya',
+                             '5. Selesai'
                          ],
                          ),
         ]
         
         jawaban = inquirer.prompt(pertanyaan)
 
-        if jawaban['menu'] == 'Lihat Review Kota Ini':
+        if jawaban['menu'][0] == '1':
             daftar()
-        elif jawaban['menu'] == 'Berikan Review':
+        elif jawaban['menu'][0] == '2':
             catat()
-        elif jawaban['menu'] == 'Edit Review Saya':
+        elif jawaban['menu'][0] == '3':
             update()
-        elif jawaban['menu'] == 'Hapus Review Saya':
+        elif jawaban['menu'][0] == '4':
             hapus()
-        elif jawaban['menu'] == 'Selesai':
-            if Menu_utama():
-                break
+        elif jawaban['menu'][0] == '5':
+            pass

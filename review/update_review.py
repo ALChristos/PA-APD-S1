@@ -1,6 +1,6 @@
 import os
 
-def update() -> None:
+def update():
     while True:
         os.system('cls' if os.name == 'nt' else 'clear')
         print("=" * 60)

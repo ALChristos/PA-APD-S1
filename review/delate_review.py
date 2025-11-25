@@ -1,7 +1,7 @@
 import os
 import inquirer
 
-def hapus() -> None:
+def hapus():
     while True:
         os.system('cls' if os.name == 'nt' else 'clear')
         print("=" * 60)

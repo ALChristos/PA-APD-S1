@@ -1,8 +1,8 @@
 import os
 import inquirer
-from review.review import review
+from review.review_rute import review
 
-def daftar() -> None:
+def daftar():
     os.system('cls' if os.name == 'nt' else 'clear')
     print("=" * 60)
     print("REVIEW PERJALANAN")
