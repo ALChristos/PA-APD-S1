@@ -1,5 +1,4 @@
-import os
-import inquirer
+import os, inquirer
 from review.create_review import catat
 from review.read_review import daftar
 from review.update_review import update
@@ -29,17 +28,12 @@ def menu_review(username):
         jawaban = inquirer.prompt(pertanyaan)
 
         if jawaban['menu'][0] == '1':
-            os.system('cls' if os.name == 'nt' else 'clear')
             daftar(username)
         elif jawaban['menu'][0] == '2':
-            os.system('cls' if os.name == 'nt' else 'clear')
             catat(username)
         elif jawaban['menu'][0] == '3':
-            os.system('cls' if os.name == 'nt' else 'clear')
             update(username)
         elif jawaban['menu'][0] == '4':
-            os.system('cls' if os.name == 'nt' else 'clear')
             hapus(username)
         elif jawaban['menu'][0] == '5':
-            os.system('cls' if os.name == 'nt' else 'clear')
             return

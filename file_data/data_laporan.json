@@ -3,5 +3,35 @@
     "laporan_akun": [],
     "laporan_rute": [],
     "review_rute": [
+        {
+            "Nama": "test",
+            "Nama Perjalanan": "Ke sini",
+            "Destinasi": "taman kanak-kanak",
+            "Tanggal": "20/2/2022",
+            "Durasi": "2 hari",
+            "Budget": "2300000000",
+            "Cerita": "if i were a woman loving you wouldn't be a sin",
+            "Rating": "5"
+        },
+        {
+            "Nama": "a",
+            "Nama Perjalanan": "mencari ubur-ubur",
+            "Destinasi": "menuju tak terbatas dan melampauinya",
+            "Tanggal": "20/3/2021",
+            "Durasi": "1 hari",
+            "Budget": "4000000",
+            "Cerita": "begitulah",
+            "Rating": "4"
+        },
+        {
+            "Nama": "test",
+            "Nama Perjalanan": "beginilah",
+            "Destinasi": "disitu sih",
+            "Tanggal": "2/3/2003",
+            "Durasi": "4 hari",
+            "Budget": "30000",
+            "Cerita": "wow",
+            "Rating": "2"
+        }
     ]
 }

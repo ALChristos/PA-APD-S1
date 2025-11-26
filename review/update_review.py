@@ -1,5 +1,5 @@
 from prettytable import PrettyTable
-import os
+import os, json
 from file_data.datajson import *
 
 def update(username):
@@ -17,7 +17,6 @@ def update(username):
 
             if not perjalanan_saya:
                 raise ValueError("Belum ada perjalanan yang bisa diedit.")
-                
 
             table = PrettyTable()
             table.field_names = ["No", "Nama Perjalanan", "Destinasi", "Tanggal", "Durasi", "Budget", "Rating"]
@@ -26,7 +25,7 @@ def update(username):
                 r = review_rute[idx]
                 table.add_row([
                     nomor,
-                    r['Nama_Perjalanan'],
+                    r['Nama Perjalanan'],
                     r['Destinasi'],
                     r['Tanggal'],
                     r['Durasi'],
@@ -56,7 +55,7 @@ def update(username):
             print("EDIT REVIEW")
             print("=" * 60)
 
-            nama_sekarang = r["Nama_Perjalanan"]
+            nama_sekarang = r["Nama Perjalanan"]
             destinasi_sekarang = r["Destinasi"]
             tanggal_sekarang = r["Tanggal"]
             durasi_sekarang = r["Durasi"]
@@ -64,22 +63,11 @@ def update(username):
             cerita_sekarang = r["Cerita"]
             rating_sekarang = r["Rating"]
 
-            print("\nReview Perjalanan ini:")
-            print("-" * 60)
-            print(f"Nama Perjalanan : {nama_sekarang}")
-            print(f"Destinasi       : {destinasi_sekarang}")
-            print(f"Tanggal         : {tanggal_sekarang}")
-            print(f"Durasi          : {durasi_sekarang}")
-            print(f"Budget          : Rp {budget_sekarang}")
-            print(f"Cerita          : {cerita_sekarang[:50]}...")
-            print(f"Rating          : {rating_sekarang}")
-            print("-" * 60)
-
             print("\nMasukkan data baru (tekan Enter untuk tidak mengubah):")
 
             nama_baru = input(f"Nama Perjalanan [{nama_sekarang}]: ").strip()
             if nama_baru:
-                r["Nama_Perjalanan"] = nama_baru
+                r["Nama Perjalanan"] = nama_baru
 
             destinasi_baru = input(f"Destinasi [{destinasi_sekarang}]: ").strip()
             if destinasi_baru:
@@ -105,12 +93,12 @@ def update(username):
 
             rating_baru = input(f"Rating (1-5) [{rating_sekarang}]: ").strip()
             if rating_baru:
-                if rating_baru not in ['1', '2', '3', '4', '5']:
-                    raise ValueError("Rating harus antara 1 sampai 5!")
+                if rating_baru not in ['1','2','3','4','5']:
+                    raise ValueError("Rating harus antara 1-5!")
                 r["Rating"] = rating_baru
 
             with open("file_data/data_laporan.json", "w") as file:
-                json.dump(file, data, indent = 4)
+                json.dump(data, file, indent=4)
 
             print("\n✓ Review berhasil diedit!")
             input("\nTekan Enter untuk kembali...")

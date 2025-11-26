@@ -1,11 +1,16 @@
-import os
-import inquirer, json
+import os, inquirer, json
+from datetime import datetime
 from file_data.datajson import *
+
+def bintang(rating):
+    rating = int(rating)
+    return "★" * rating + "☆" * (5 - rating)
 
 def catat(username): 
     os.system('cls' if os.name == 'nt' else 'clear')
     data = baca_data_laporan()
     data_review = data["review_rute"]
+
     while True:
         print("=" * 60)
         print("MASUKAN REVIEW")
@@ -20,7 +25,12 @@ def catat(username):
             if not destinasi:
                 raise ValueError("\nDestinasi tidak boleh kosong!")
 
-            tanggal = input("Tanggal Pergi : ").strip()
+            tanggal = input("Tanggal Pergi (DD/MM/YYYY): ").strip()
+            try:
+                datetime.strptime(tanggal, "%d/%m/%Y")
+            except ValueError:
+                raise ValueError("\nFormat tanggal salah! Gunakan format DD/MM/YYYY")
+            
             durasi = input("Berapa Lama : ").strip()
 
             budget = input("Budget (angka saja) : ").strip()
@@ -28,13 +38,14 @@ def catat(username):
                 raise ValueError("\nBudget harus berupa angka!")
 
             cerita = input("Cerita/Experience : ").strip()
+
             star = input("Rating (1-5) : ").strip()
-            if star not in ['1', '2', '3', '4', '5']:
-                raise ValueError("\nRating harus antara 1 sampai 5 dan tidak boleh kosong!")
+            if star not in ['1','2','3','4','5']:
+                raise ValueError("\nRating harus 1-5!")
 
             tambah_review ={
                 "Nama": username,
-                "Nama_Perjalanan": nama_perjalanan,
+                "Nama Perjalanan": nama_perjalanan,
                 "Destinasi": destinasi,
                 "Tanggal": tanggal,
                 "Durasi": durasi,
@@ -42,28 +53,29 @@ def catat(username):
                 "Cerita": cerita,
                 "Rating": star
             }
+
             data_review.append(tambah_review)
+
             with open('file_data/data_laporan.json', 'w') as file:
                 json.dump(data, file, indent=4)
-                print("\nReview berhasil ditambahkan!")
-                input("\nTekan Enter untuk kembali...")
-                os.system('cls' if os.name == 'nt' else 'clear')
-                return
+
+            print("\nReview berhasil ditambahkan!")
+            input("\nTekan Enter untuk kembali...")
+            return
 
         except ValueError as e:
             print(e)
+
             pertanyaan = [
-            inquirer.List('menu',
-                        message="apa ingin mengisi ulang?",
-                        choices=[
-                            'ya',
-                            'tidak'
-                        ],
-                        ),
-        ]
+                inquirer.List('menu',
+                    message="Apa ingin mengisi ulang?",
+                    choices=['ya', 'tidak']
+                )
+            ]
             jawaban = inquirer.prompt(pertanyaan)
-            
+
             if jawaban['menu'] == 'ya':
+                os.system('cls' if os.name == 'nt' else 'clear')
                 continue
-            elif jawaban['menu'] == 'tidak':
+            else:
                 return

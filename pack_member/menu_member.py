@@ -89,36 +89,43 @@ def jalan_jalan(username):
     print("Perjalanan sedang berlangsung...\n")
     loading_waktu(waktu_menit)
 
-    pertanyaan = [
-            inquirer.List('menu',
-                         message = "Apakah anda ingin memberikan review/laporan untuk kota ini?",
-                         choices = [
-                            'Ya',
-                            'Tidak'
-                         ],
-                         ),
-        ]
-    jawaban = inquirer.prompt(pertanyaan)
-    
-    if jawaban['menu'] == 'Ya':
+    clear()
+    while True:
         pertanyaan = [
                 inquirer.List('menu',
-                            message="Pilih salah satu:",
-                            choices=[
-                                '1. Saya ingin memberikan review untuk kota ini',
-                                '2. Saya ingin memberikan laporan untuk kota ini',
-                                '3. Keluar'
+                            message = "Apakah anda ingin memberikan review/laporan untuk kota ini?",
+                            choices = [
+                                'Ya',
+                                'Tidak'
                             ],
                             ),
             ]
-        jawaban_pertanyaan = inquirer.prompt(pertanyaan)
-        while True:
-            if jawaban_pertanyaan['menu'][0] == '1':
-                menu_review(username)
-            elif jawaban_pertanyaan['menu'][0] == '2':
-                pass
-            elif jawaban_pertanyaan['menu'][0] == '3':
-                return
+        jawaban = inquirer.prompt(pertanyaan)
+        clear()
+        if jawaban['menu'] == 'Ya':
+            while True:
+                pertanyaan = [
+                        inquirer.List('menu',
+                                    message="Pilih salah satu:",
+                                    choices=[
+                                        '1. Saya ingin memberikan review untuk kota ini',
+                                        '2. Saya ingin memberikan laporan untuk kota ini',
+                                        '3. Tidak jadi'
+                                    ],
+                                    ),
+                    ]
+                jawaban_pertanyaan = inquirer.prompt(pertanyaan)
+                if jawaban_pertanyaan['menu'][0] == '1':
+                    menu_review(username)
+                elif jawaban_pertanyaan['menu'][0] == '2':
+                    pass
+                elif jawaban_pertanyaan['menu'][0] == '3':
+                    clear()
+                    break
+        else:
+            break              
+        
+        
 
     clear()
     
