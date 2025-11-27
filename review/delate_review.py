@@ -23,7 +23,7 @@ def hapus(username):
 
         choices = []
         for nomor, idx in enumerate(perjalanan_saya, start=1):
-            nama = review_rute[idx]["Nama Perjalanan"]
+            nama = review_rute[idx]["Destinasi"]
             choices.append((f"{nomor}. {nama}", idx))
 
         choices.append(("Batal", None))
@@ -42,7 +42,7 @@ def hapus(username):
         if index_dict is None:
             return
 
-        nama = review_rute[index_dict]["Nama Perjalanan"]
+        nama = review_rute[index_dict]["Destinasi"]
         konfirmasi = [
             inquirer.List(
                 'pilih',

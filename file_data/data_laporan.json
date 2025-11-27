@@ -4,18 +4,8 @@
     "laporan_rute": [],
     "review_rute": [
         {
-            "Nama": "test",
-            "Nama Perjalanan": "Ke sini",
-            "Destinasi": "taman kanak-kanak",
-            "Tanggal": "20/2/2022",
-            "Durasi": "2 hari",
-            "Budget": "2300000000",
-            "Cerita": "if i were a woman loving you wouldn't be a sin",
-            "Rating": "5"
-        },
-        {
             "Nama": "a",
-            "Nama Perjalanan": "mencari ubur-ubur",
+            "Nama Perjalanan": "Balikpapan-Samarinda",
             "Destinasi": "menuju tak terbatas dan melampauinya",
             "Tanggal": "20/3/2021",
             "Durasi": "1 hari",
@@ -25,13 +15,13 @@
         },
         {
             "Nama": "test",
-            "Nama Perjalanan": "beginilah",
-            "Destinasi": "disitu sih",
-            "Tanggal": "2/3/2003",
-            "Durasi": "4 hari",
-            "Budget": "30000",
+            "Nama Perjalanan": "Balikpapan-Samarinda",
+            "Destinasi": "kemana aja",
+            "Tanggal": "29/2/2004",
+            "Durasi": "3 hari",
+            "Budget": "3000000",
             "Cerita": "wow",
-            "Rating": "2"
+            "Rating": "5"
         }
     ]
 }

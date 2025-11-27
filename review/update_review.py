@@ -1,6 +1,5 @@
-from prettytable import PrettyTable
 from datetime import datetime
-import os, json
+import os, json, inquirer
 from file_data.datajson import *
 
 def update(username):
@@ -19,36 +18,27 @@ def update(username):
             if not perjalanan_saya:
                 raise ValueError("Belum ada perjalanan yang bisa diedit.")
 
-            table = PrettyTable()
-            table.field_names = ["No", "Nama Perjalanan", "Destinasi", "Tanggal", "Durasi", "Budget", "Rating"]
-
+            choices = []
             for nomor, idx in enumerate(perjalanan_saya, start=1):
-                r = review_rute[idx]
-                table.add_row([
-                    nomor,
-                    r['Nama Perjalanan'],
-                    r['Destinasi'],
-                    r['Tanggal'],
-                    r['Durasi'],
-                    f"Rp {r['Budget']}",
-                    r['Rating']
-                ])
+                nama_perjalanan = review_rute[idx]["Destinasi"]
+                choices.append((f"{nomor}. {nama_perjalanan}", idx))
 
-            print("\nDaftar Perjalanan Saya:")
-            print(table)
+            choices.append(("Batal", None))
 
-            pilih_edit = input("\nPilih nomor review yang mau diedit (atau ketik 'batal'): ").strip()
-            if pilih_edit.lower() == "batal":
+            pertanyaan = [
+                inquirer.List(
+                    'pilihan', 
+                    message="Pilih review yang ingin diedit :",
+                    choices=choices
+                )
+            ]
+
+            jawaban = inquirer.prompt(pertanyaan)
+            index_dict = jawaban["pilihan"]
+
+            if index_dict is None:
                 return
-
-            if not pilih_edit.isdigit():
-                raise ValueError("Input harus berupa angka!")
-
-            pilihan_edit = int(pilih_edit) - 1
-            if pilihan_edit < 0 or pilihan_edit >= len(perjalanan_saya):
-                raise ValueError("Nomor perjalanan tidak valid!")
-
-            index_dict = perjalanan_saya[pilihan_edit]
+            
             r = review_rute[index_dict]
 
             os.system('cls' if os.name == 'nt' else 'clear')
@@ -56,7 +46,6 @@ def update(username):
             print("EDIT REVIEW")
             print("=" * 60)
 
-            nama_sekarang = r["Nama Perjalanan"]
             destinasi_sekarang = r["Destinasi"]
             tanggal_sekarang = r["Tanggal"]
             durasi_sekarang = r["Durasi"]
@@ -64,11 +53,7 @@ def update(username):
             cerita_sekarang = r["Cerita"]
             rating_sekarang = r["Rating"]
 
-            print("\nMasukkan data baru (tekan Enter untuk tidak mengubah):")
-
-            nama_baru = input(f"Nama Perjalanan [{nama_sekarang}]: ").strip()
-            if nama_baru:
-                r["Nama Perjalanan"] = nama_baru
+            print("\nMasukkan data baru (tekan Enter untuk tidak mengubah):\n")
 
             destinasi_baru = input(f"Destinasi [{destinasi_sekarang}]: ").strip()
             if destinasi_baru:
@@ -112,4 +97,4 @@ def update(username):
         except ValueError as e:
             print(e)
             input("\nTekan Enter Untuk Kembali...")
-            return
+            continue

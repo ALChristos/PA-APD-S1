@@ -1,12 +1,13 @@
 import os, inquirer, json
 from datetime import datetime
 from file_data.datajson import *
+from pack_member.menu_member import *
 
 def bintang(rating):
     rating = int(rating)
     return "★" * rating + "☆" * (5 - rating)
 
-def catat(username): 
+def catat(username, kota_1, kota_tujuan): 
     os.system('cls' if os.name == 'nt' else 'clear')
     data = baca_data_laporan()
     data_review = data["review_rute"]
@@ -17,9 +18,6 @@ def catat(username):
         print("=" * 60)
 
         try:
-            nama_perjalanan = input("Nama Perjalanan : ").strip()
-            if not nama_perjalanan:
-                raise ValueError("\nNama perjalanan tidak boleh kosong!")
 
             destinasi = input("Destinasi : ").strip()
             if not destinasi:
@@ -32,6 +30,8 @@ def catat(username):
                 raise ValueError("\nFormat tanggal salah! Gunakan format DD/MM/YYYY")
             
             durasi = input("Berapa Lama : ").strip()
+            if not durasi:
+                raise ValueError("\nDurasi tidak boleh kosong!")
 
             budget = input("Budget (angka saja) : ").strip()
             if not budget.isdigit():
@@ -45,7 +45,7 @@ def catat(username):
 
             tambah_review ={
                 "Nama": username,
-                "Nama Perjalanan": nama_perjalanan,
+                "Nama Perjalanan": f"{kota_1}-{kota_tujuan}",
                 "Destinasi": destinasi,
                 "Tanggal": tanggal,
                 "Durasi": durasi,

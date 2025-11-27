@@ -3,9 +3,11 @@ from review.create_review import catat
 from review.read_review import daftar
 from review.update_review import update
 from review.delate_review import hapus
+from pack_member.menu_member import *
+from file_data.datajson import *
 
 
-def menu_review(username):
+def menu_review(username, kota_1, kota_tujuan):
     while True:
         os.system('cls' if os.name == 'nt' else 'clear')
         print("=" * 60)
@@ -30,7 +32,7 @@ def menu_review(username):
         if jawaban['menu'][0] == '1':
             daftar(username)
         elif jawaban['menu'][0] == '2':
-            catat(username)
+            catat(username, kota_1, kota_tujuan)
         elif jawaban['menu'][0] == '3':
             update(username)
         elif jawaban['menu'][0] == '4':

@@ -110,13 +110,13 @@ def jalan_jalan(username):
                                     choices=[
                                         '1. Saya ingin memberikan review untuk kota ini',
                                         '2. Saya ingin memberikan laporan untuk kota ini',
-                                        '3. Tidak jadi'
+                                        '3. Tidak jadi/Selesai'
                                     ],
                                     ),
                     ]
                 jawaban_pertanyaan = inquirer.prompt(pertanyaan)
                 if jawaban_pertanyaan['menu'][0] == '1':
-                    menu_review(username)
+                    menu_review(username, kota_1, kota_tujuan)
                 elif jawaban_pertanyaan['menu'][0] == '2':
                     pass
                 elif jawaban_pertanyaan['menu'][0] == '3':
