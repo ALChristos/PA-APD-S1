@@ -62,7 +62,7 @@ def jalan_jalan(username):
     kendaraan = menu_kendaraan()
     clear()
     kota_tujuan = pilih_kota_tujuan(kota_1, data_rute)
-
+    kota_tujuan, jarak, tambahan_waktu = cek_kondisi_rute(kota_1, kota_tujuan, data_rute)
     if kota_tujuan is None:
         return
 
@@ -83,16 +83,18 @@ def jalan_jalan(username):
     print(f"Jarak: {jarak} km")
     print(f"Kendaraan: {kendaraan}")
 
-    waktu_menit = hitung_waktu_tempuh(jarak, kendaraan)
+    waktu_menit = hitung_waktu_tempuh(jarak, kendaraan) + tambahan_waktu
 
     print(f"Waktu tempuh: {waktu_menit} Menit")
     print("Perjalanan sedang berlangsung...\n")
-    simpan_kota_terakhir(username, kota_tujuan)
     loading_waktu(waktu_menit)
+    simpan_kota_terakhir(username, kota_tujuan)
 
     clear()
     while True:
-        print(f"Kota terakhir kamu sekarang: {kota_tujuan}")
+        print("="*50)
+        print(f"Kota terakhir kamu sekarang: {kota_tujuan}".center(50))
+        print("="*50)
         pertanyaan = [
                 inquirer.List('menu',
                             message = "Apakah anda ingin memberikan review/laporan untuk kota ini?",
@@ -105,7 +107,11 @@ def jalan_jalan(username):
         jawaban = inquirer.prompt(pertanyaan)
         clear()
         if jawaban['menu'] == 'Ya':
+            clear()
             while True:
+                print("╔" + "═" * 58 + "╗")
+                print("║" + " REVIEW PERJALANAN dan LAPORAN PERJALANAN ".center(58) + "║")
+                print("╚" + "═" * 58 + "╝")
                 pertanyaan = [
                         inquirer.List('menu',
                                     message="Pilih salah satu:",
@@ -118,9 +124,18 @@ def jalan_jalan(username):
                     ]
                 jawaban_pertanyaan = inquirer.prompt(pertanyaan)
                 if jawaban_pertanyaan['menu'][0] == '1':
+                    clear()
+                    print("╔" + "═" * 58 + "╗")
+                    print("║" + " 📝  REVIEW PERJALANAN ".center(58) + "║")
+                    print("╚" + "═" * 58 + "╝")
                     menu_review(username, kota_1, kota_tujuan)
                 elif jawaban_pertanyaan['menu'][0] == '2':
-                    pass
+                    clear()
+                    print("╔" + "═" * 58 + "╗")
+                    print("║" + " 📣  LAPORAN KONDISI RUTE ".center(58) + "║")
+                    print("╚" + "═" * 58 + "╝")
+                    laporkan_rute(kota_1, kota_tujuan)
+                    return
                 elif jawaban_pertanyaan['menu'][0] == '3':
                     clear()
                     break

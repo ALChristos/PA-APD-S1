@@ -3,9 +3,12 @@ import time, sys, os
 
 def teks_mulai():
     print("=" * 60)
-    print("+" + "="*14 + "\tSelamat datang di GwehMauJalan!\t" + "="*11 + "+")
-    print("+" + "=" * 58 + "+")
-    print("+" + "="*14 + "\tSilahkan Login Terlebih Dahulu\t" + "="*11 + "+")
+    print("+==========================================================+")
+    print("|                  ✦ Selamat Datang ✦                      |")
+    print("|                      GwehMauJalan                        |")
+    print("+----------------------------------------------------------+")
+    print("|                Silahkan Login Terlebih Dahulu            |")
+    print("+==========================================================+")
     print("=" * 60)
 
 
@@ -77,7 +80,7 @@ def loading():
     
     
 def loading_waktu(waktu_menit):
-    for sisa in range(waktu_menit, -1, -5):
+    for sisa in range(waktu_menit, -1, -10):
         bar = "█" * (waktu_menit - sisa)
         bar += "_" * sisa
 

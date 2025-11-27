@@ -47,7 +47,8 @@ def registrasi():
 
         except ValueError as e:
             print(e)
-            continue      
+            input("Tekan Enter untuk kembali...")
+            break      
 
 def login_akun():
     kesempatan = 3

@@ -31,7 +31,7 @@ def hapus(username):
         pertanyaan = [
             inquirer.List(
                 'review',
-                message="Pilih review yang ingin dihapus:",
+                message="Pilih review yang ingin dihapus :",
                 choices=choices
             )
         ]

@@ -97,4 +97,5 @@ def update(username):
         except ValueError as e:
             print(e)
             input("\nTekan Enter Untuk Kembali...")
-            continue
+            os.system("cls" if os.name == "nt" else "clear")
+            return

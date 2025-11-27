@@ -41,10 +41,9 @@ while True:
                         elif jawab_pil1["menu_pil1"][0] == "2":
                             bersih()
                             melihat_rute_perjalanan()
-                            break
                         elif jawab_pil1["menu_pil1"][0] == "3":
-                            # NANTI AKAN DI LANJUT LAGI 
-                            pass
+                            bersih()
+                            menghapus_rute_perjalanan()
                         elif jawab_pil1["menu_pil1"][0] == "4":
                             bersih()
                             break
@@ -54,7 +53,16 @@ while True:
                     bersih()
                     while True:
                         header_menu_admin()
-                        break
+                        jawab_pil2 = mengelola_laporan_review()
+                        if jawab_pil2["menu_pil2"][0] == "1":
+                            bersih()
+                            tangani_rute()
+                        elif jawab_pil2["menu_pil2"][0] == "2":
+                            bersih()
+                            melihat_dan_menghapus_review_pengguna()
+                        elif jawab_pil2["menu_pil2"][0] == "3":
+                            bersih()
+                            break
                  
                 elif jawab["admin_menu"][0] == "3":
                     detik3()
@@ -93,8 +101,8 @@ while True:
                     break
                 
     elif jawab["list_login"] == "Registrasi":
-        registrasi()  
         bersih()
+        registrasi()
     elif jawab["list_login"] == "Keluar":
         bersih()
         print("Terima kasih telah menggunakan aplikasi ini. Sampai jumpa!")

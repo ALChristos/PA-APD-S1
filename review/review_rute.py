@@ -38,4 +38,5 @@ def menu_review(username, kota_1, kota_tujuan):
         elif jawaban['menu'][0] == '4':
             hapus(username)
         elif jawaban['menu'][0] == '5':
+            os.system('cls' if os.name == 'nt' else 'clear')
             return

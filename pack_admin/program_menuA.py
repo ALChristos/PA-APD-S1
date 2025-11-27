@@ -3,7 +3,7 @@ from prettytable import PrettyTable
 from file_data.datajson import *
 from pesan import *
 
-import os
+import os, prettytable
 def clear():
     os.system("cls" if os.name == "nt" else "clear")
     
@@ -41,7 +41,7 @@ def membuat_rute_perjalanan():
             rute_baru = {
                     "rute": rute,
                     "jarak_tempuh": jarak_tempuh,
-                    "status" : "aman"
+                    "status" : "Aman"
                     }
             
             tambah_rute.append(rute_baru)
@@ -98,101 +98,358 @@ def membuat_rute_perjalanan():
                 input("Tekan Enter Untuk Menginput Ulang")
                 clear()
                 continue
+    
                 
- 
-def melihat_rute_perjalanan():  
-    data = baca_data_perjalanan()
-    table = PrettyTable()
-    table.field_names = ["Kota Asal", "Rute", "Jarak Tempuh (km)", "Status"]
-    for kota_asal, list_rute in data.items():
-        if list_rute:
-           tampilkan_pertama_kali = True
-           for info_rute in list_rute:
-               if tampilkan_pertama_kali:
-                   table.add_row([kota_asal, info_rute["rute"], info_rute["jarak_tempuh"], info_rute["status"]])
-                   tampilkan_pertama_kali = False
-               else:
-                   table.add_row(["", info_rute["rute"], info_rute["jarak_tempuh"], info_rute["status"]])
+def melihat_rute_perjalanan():
+    data_perjalanan = baca_data_perjalanan()
+    clear()
+    print("=" * 70)
+    print("📍 DAFTAR RUTE PERJALANAN".center(70))
+    print("=" * 70)
+    if len(data_perjalanan.keys()) < 1:
+        print("\nBelum Ada Data Rute Perjalanan!")
+        input("\nTekan Enter untuk kembali...")
+        clear()
+        return
+
+    for kota, daftar in data_perjalanan.items():
+        print(f"\nKota: {kota}")
+        table = PrettyTable()
+        table.field_names = ["No", "Rute", "Jarak (km)", "Status"]
+        if len(daftar) == 0:
+            table.add_row(["-", "(Tidak ada rute)", "-", "-"])
         else:
-            table.add_row([kota_asal, "-", "-", "-"])
-        
-    print(table)
-    input("Tekan Enter Untuk Kembali Ke Menu Mengelola Rute Perjalanan")
+            for idx, r in enumerate(daftar, start=1):
+                table.add_row([
+                    idx,
+                    r["rute"],
+                    r["jarak_tempuh"],
+                    r["status"]
+                ])
+
+        print(table)
+
+    input("\nTekan Enter untuk kembali...")
     clear()
 
 
 def menghapus_rute_perjalanan():
-    data = baca_data_perjalanan()          
-    rute = data["rute_perjalanan"]   
+    data_perjalanan = baca_data_perjalanan()
+    data_laporan = baca_data_laporan()
 
-    if len(rute) < 1:
-        print("Belum Ada Rute Perjalanan Yang Tersedia!!")
-        input("Silahkan Tekan Enter Untuk Kembali Ke Menu Mengelola Rute...")
+    review_list = data_laporan["review_rute"]
+
+    if len(data_perjalanan.keys()) < 1:
+        print("Belum Ada Data Rute Perjalanan!")
+        input("Tekan Enter untuk kembali...")
         clear()
         return
 
     while True:
-        print("=== DAFTAR RUTE PERJALANAN ===")
-        for r in rute:
-            print(f"ID: {r['id']} | Dari: {r['dari']} | Ke: {r['ke']} | Waktu: {r['waktu']} | Harga: {r['harga']}")
+        clear()
+        print("=" * 60)
+        print("\t\tMENGHAPUS RUTE PERJALANAN")
+        print("=" * 60)
 
-        pilihan = input("\nMasukkan ID Rute Yang Ingin Dihapus: ").strip()
+        for kota, daftar in data_perjalanan.items():
+            print(f"\nKota: {kota}")
+            table = PrettyTable()
+            table.field_names = ["No", "Rute", "Jarak (km)", "Status"]
+            if len(daftar) == 0:
+                table.add_row(["-", "(Tidak ada rute)", "-", "-"])
+            else:
+                for idx, r in enumerate(daftar, start=1):
+                    table.add_row([
+                        idx,
+                        r["rute"],
+                        r["jarak_tempuh"],
+                        r["status"]
+                    ])
+            print(table)
+
+        print("\nFormat input:")
+        print("     NamaKota-IndexRute    ")
+        print("Contoh: Balikpapan-1")
+
+        pilihan = input("\nMasukkan Rute Yang Ingin Dihapus: ").strip()
+
+        if "-" not in pilihan:
+            print("\nFormat salah! Contoh: Balikpapan-1")
+            input("Tekan Enter untuk ulangi...")
+            continue
+
+        kota, idx = pilihan.split("-")
+        kota = kota.strip()
+
+        if kota not in data_perjalanan:
+            print("\nKota tidak ditemukan!")
+            input("Tekan Enter untuk ulangi...")
+            continue
 
         try:
-            pilihan = int(pilihan)
-            pilih_rute = next((i for i in rute if int(i["id"]) == pilihan), None)
+            idx = int(idx) - 1
+        except:
+            print("\nIndex rute harus angka!")
+            input("Tekan Enter untuk ulangi...")
+            continue
 
-            if pilih_rute is None:
+        daftar_rute = data_perjalanan[kota]
+
+        if idx < 0 or idx >= len(daftar_rute):
+            print("\nIndex rute tidak valid!")
+            input("Tekan Enter untuk ulangi...")
+            continue
+
+        rute_dihapus = daftar_rute[idx]
+        nama_rute = rute_dihapus["rute"]
+        kota_1, kota_2 = nama_rute.split("-")
+        rute_kebalikan = f"{kota_2}-{kota_1}"
+
+        konfirmasi = input(
+            f"Yakin ingin menghapus rute '{nama_rute}' beserta rute kebalikannya '{rute_kebalikan}'? (Y/N): "
+        ).strip().lower()
+
+        if konfirmasi == "n":
+            print("Penghapusan dibatalkan...")
+            detik3()
+            clear()
+            return
+
+        elif konfirmasi != "y":
+            print("Input tidak valid, masukkan Y/N!")
+            input("Tekan Enter...")
+            continue
+
+        daftar_rute.pop(idx)
+        if kota_2 in data_perjalanan:
+            for i, item in enumerate(data_perjalanan[kota_2]):
+                if item["rute"] == rute_kebalikan:
+                    data_perjalanan[kota_2].pop(i)
+                    break
+
+        review_list[:] = [
+            r for r in review_list
+            if r["Nama Perjalanan"] not in [nama_rute, rute_kebalikan]
+        ]
+
+        for r in [nama_rute, rute_kebalikan]:
+            if r in data_laporan.get("laporan_status", {}):
+                del data_laporan["laporan_status"][r]
+
+        with open("file_data/data_perjalanan.json", "w") as f:
+            json.dump(data_perjalanan, f, indent=4)
+
+        with open("file_data/data_laporan.json", "w") as f:
+            json.dump(data_laporan, f, indent=4)
+
+        print(f"\nRute '{nama_rute}' dan rute kebalikannya '{rute_kebalikan}' BERHASIL dihapus!")
+        print("Semua review dan laporan masalah terkait juga telah dihapus.")
+        input("Tekan Enter untuk kembali...")
+        clear()
+        return
+
+ 
+   
+def melihat_dan_menghapus_review_pengguna(konfirmasi_awal=False):
+    data = baca_data_laporan()
+    review = data["review_rute"]
+
+    clear()
+    print("=" * 60)
+    print("\t\tMELIHAT REVIEW PENGGUNA")
+    print("=" * 60)
+
+    if len(review) < 1:
+        print("Tidak Ada Review Pengguna Yang Terdeteksi!!")
+        input("\nTekan Enter Untuk Kembali Ke Menu Mengelola Review Pengguna...")
+        detik3()
+        clear()
+        return
+
+    for idx, r in enumerate(review):
+        print(f"ID Review           : {idx+1}")
+        print(f"Nama                : {r['Nama']}")
+        print(f"Nama Perjalanan     : {r['Nama Perjalanan']}")
+        print(f"Destinasi           : {r['Destinasi']}")
+        print(f"Tanggal             : {r['Tanggal']}")
+        print(f"Durasi              : {r['Durasi']}")
+        print(f"Budget              : {r['Budget']}")
+        print(f"Cerita              : {r['Cerita']}")
+        print(f"Rating              : {r['Rating']}")
+        print("-" * 60)
+
+    if not konfirmasi_awal:
+        pilihan = input("Apakah Anda Ingin Menghapus Review Dari Daftar Ini? (Y/N): ").strip().lower()
+        if pilihan == "n":
+            print("\nKembali Ke Menu Mengelola Review Pengguna...")
+            detik3()
+            clear()
+            return
+
+        elif pilihan == "y":
+            if len(review) < 1:
+                print("Semua Review Sudah Dihapus!!")
+                input("\nTekan Enter Untuk Kembali...")
+                detik3()
+                clear()
+                return
+        else:
+            print("\nInput Tidak Valid! Masukkan Y atau N.")
+            input("Tekan Enter Untuk Menginput Ulang...")
+            clear()
+            return melihat_dan_menghapus_review_pengguna(konfirmasi_awal=False)
+
+    while True:
+        clear()
+        print("=" * 60)
+        print("\t\tMENGHAPUS REVIEW PENGGUNA")
+        print("=" * 60)
+
+        for idx, r in enumerate(review):
+            print(f"{idx+1}. Nama: {r['Nama']} | Perjalanan: {r['Nama Perjalanan']} | Rating: {r['Rating']}")
+
+        hapus_id = input("\nMasukkan ID Review Yang Ingin Anda Hapus: ").strip()
+
+        try:
+            hapus_id = int(hapus_id)
+            index = hapus_id - 1
+
+            if index < 0 or index >= len(review):
                 print("\nID tidak ditemukan!")
                 input("Tekan Enter untuk ulangi...")
                 clear()
                 continue
 
-            else:
-                while True:
-                    konfirmasi = input(
-                        f"Apakah Anda Yakin Ingin Menghapus Rute Dari {pilih_rute['dari']} Ke {pilih_rute['ke']}? (Y/N): "
-                    ).strip().lower()
+            review_dihapus = review[index]
 
-                    if konfirmasi == "y":
-                        index = rute.index(pilih_rute)
-                        rute.pop(index)
+            while True:
+                konfirmasi = input(
+                    f"Apakah Anda Yakin Ingin Menghapus Review Dari Pengguna {review_dihapus['Nama']}? (Y/N): "
+                ).strip().lower()
 
-                        with open("file_data/data_perjalanan.json", "w") as file:
-                            json.dump(data, file, indent=4)
+                if konfirmasi == "y":
+                    review.pop(index)
 
-                        print("Rute Berhasil Dihapus!!")
-                        input("\nTekan Enter Untuk Kembali Ke Menu Mengelola Rute...")
-                        detik3()
-                        clear()
-                        return
+                    with open("file_data/data_laporan.json", "w") as file:
+                        json.dump(data, file, indent=4)
 
-                    elif konfirmasi == "n":
-                        print("Rute Tidak Jadi Dihapus...")
-                        input("\nTekan Enter Untuk Kembali Ke Menu Mengelola Rute...")
-                        detik3()
-                        clear()
-                        return
+                    print(f"\nReview Dari Pengguna {review_dihapus['Nama']} Berhasil Dihapus!!")
 
-                    else:
-                        print("\nMasukkan pilihan Y atau N!")
-                        input("Tekan Enter Untuk Menginput Ulang...")
-                        clear()
-                        continue
+                    while True:
+                        ulang = input("Apakah Anda Ingin Menghapus Review Lagi? (Y/N): ").strip().lower()
+                        if ulang == "y":
+                            return melihat_dan_menghapus_review_pengguna(konfirmasi_awal=True)
+
+                        elif ulang == "n":
+                            print("Kembali Ke Menu Mengelola Review Pengguna...")
+                            detik3()
+                            clear()
+                            return
+
+                        else:
+                            print("Masukkan pilihan Y atau N!")
+                            input("Tekan Enter Untuk Menginput Ulang...")
+                            clear()
+
+                elif konfirmasi == "n":
+                    print("\nPenghapusan Dibatalkan.")
+                    input("Tekan Enter Untuk Kembali...")
+                    clear()
+                    return
+
+                else:
+                    print("Masukkan pilihan Y atau N!")
+                    input("Tekan Enter Untuk Menginput Ulang...")
+                    clear()
+                    continue
 
         except ValueError:
             print("\nInput Tidak Valid!! ID Harus Berupa Angka!!")
             input("Tekan Enter Untuk Menginput Ulang...")
             detik3()
             clear()
-            continue    
+            continue
    
 
-def lihat_tangani_laporan():
-    pass
-  
- 
-      
+def tangani_rute():
+    data_rute = baca_data_perjalanan()
+    laporan = baca_data_laporan()
+    laporan_status = laporan.get("laporan_status", {})
+
+    rute_masalah = {k: v for k, v in laporan_status.items() if v != "Aman"}
+
+    if not rute_masalah:
+        print("\nSemua rute dalam kondisi AMAN.\n")
+        input("Tekan Enter Untuk Kembali Ke Menu...")
+        os.system("cls" if os.name == "nt" else "clear")
+        return
+
+    tabel = PrettyTable()
+    tabel.field_names = ["No", "Rute", "Status"]
+    for idx, (rute, status) in enumerate(rute_masalah.items(), start=1):
+        tabel.add_row([idx, rute, status])
+
+    while True:
+        print("\n⚠ Rute Bermasalah Saat Ini:")
+        print(tabel)
+        try:
+            pilihan = int(input("\nMasukkan nomor rute yang ingin ditangani (0 untuk batal): "))
+            if pilihan == 0:
+                print("Tidak ada rute yang ditangani.")
+                input("Tekan Enter Untuk Kembali Ke Menu...")
+                os.system("cls" if os.name == "nt" else "clear")
+                return
+            if not (1 <= pilihan <= len(rute_masalah)):
+                print("Nomor tidak valid!")
+                input("Tekan Enter Untuk Kembali Ke Menu...")
+                os.system("cls" if os.name == "nt" else "clear")
+                continue
+        except ValueError:
+            print("Input harus angka!")
+            input("Tekan Enter Untuk Kembali Ke Menu...")
+            os.system("cls" if os.name == "nt" else "clear")
+            continue
+
+        rute_terpilih = list(rute_masalah.keys())[pilihan-1]
+        kota_1, kota_2 = rute_terpilih.split("-")
+        print(f"\n✔ Menangani rute: {rute_terpilih}")
+
+        laporan_status[rute_terpilih] = "Aman"
+        rute_kebalikan = f"{kota_2}-{kota_1}"
+        if rute_kebalikan in laporan_status:
+            laporan_status[rute_kebalikan] = "Aman"
+
+        for item in data_rute[kota_1]:
+            if item["rute"] == rute_terpilih:
+                item["status"] = "Aman"
+        if kota_2 in data_rute:
+            for item in data_rute[kota_2]:
+                if item["rute"] == rute_kebalikan:
+                    item["status"] = "Aman"
+
+        laporan["laporan_status"] = laporan_status
+        with open("file_data/data_laporan.json", "w") as f:
+            json.dump(laporan, f, indent=4)
+        with open("file_data/data_perjalanan.json", "w") as f:
+            json.dump(data_rute, f, indent=4)
+
+        print(f"\n✔ Rute {rute_terpilih} dan {rute_kebalikan} berhasil dikembalikan ke status AMAN.")
+
+        while True:
+            konfirmasi = input("Apakah Anda Ingin Menangani Masalah Rute Lain? (Y/N) ").lower().strip()
+            if konfirmasi == "y":
+                os.system("cls" if os.name == "nt" else "clear")
+                return tangani_rute()
+            elif konfirmasi == "n":
+                os.system("cls" if os.name == "nt" else "clear")
+                return
+            else:
+                print("Input Tidak Valid Pilih Y/N Saja")
+                input("Tekan Enter Untuk Menginput Ulang...")
+                os.system("cls" if os.name == "nt" else "clear")
+                continue
+                        
+          
 def melihat_akun_pengguna(konfirmasi_awal = False):
     data = baca_data_akun()
     akun = data["member"]

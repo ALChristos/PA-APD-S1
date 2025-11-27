@@ -1,54 +1,55 @@
 {
     "Balikpapan": [
         {
-            "rute": "Balikpapan-Samarinda",
-            "jarak_tempuh": 100.0,
-            "status": "aman"
-        },
-        {
             "rute": "Balikpapan-Bontang",
             "jarak_tempuh": 110.0,
-            "status": "aman"
+            "status": "Aman"
         },
         {
-            "rute": "Balikpapan-Banjarbaru", 
+            "rute": "Balikpapan-Banjarbaru",
             "jarak_tempuh": 120.0,
-            "status": "aman"
+            "status": "Aman"
         },
         {
             "rute": "Balikpapan-Banjarmasin",
             "jarak_tempuh": 130.0,
-            "status": "aman"
+            "status": "Aman"
         },
         {
             "rute": "Balikpapan-Pontianak",
             "jarak_tempuh": 140.0,
-            "status": "aman"    
+            "status": "Aman"
         },
         {
             "rute": "Balikpapan-Singkawang",
             "jarak_tempuh": 150.0,
-            "status": "aman"
+            "status": "Aman"
         },
         {
             "rute": "Balikpapan-Palangkaraya",
             "jarak_tempuh": 160.0,
-            "status": "aman"
+            "status": "Aman"
         },
         {
             "rute": "Balikpapan-Tarakan",
             "jarak_tempuh": 170.0,
-            "status": "aman"
+            "status": "Aman"
         }
     ],
     "Samarinda": [
         {
-            "rute": "Samarinda-Balikpapan",
-            "jarak_tempuh": 100.0,
-            "status": "aman"
+            "rute": "Samarinda-Bontang",
+            "jarak_tempuh": 110.0,
+            "status": "Aman"
         }
     ],
-    "Bontang": [],
+    "Bontang": [
+        {
+            "rute": "Bontang-Balikpapan",
+            "jarak_tempuh": 110.0,
+            "status": "Aman"
+        }
+    ],
     "Banjarbaru": [],
     "Banjarmasin": [],
     "Pontianak": [],

@@ -1,26 +1,15 @@
 {
-    "pesan_admin": [],
     "laporan_akun": [],
-    "laporan_rute": [],
+    "laporan_status": {},
     "review_rute": [
         {
-            "Nama": "a",
-            "Nama Perjalanan": "Balikpapan-Samarinda",
-            "Destinasi": "menuju tak terbatas dan melampauinya",
-            "Tanggal": "20/3/2021",
-            "Durasi": "1 hari",
+            "Nama": "mouriiu",
+            "Nama Perjalanan": "Bontang-Balikpapan",
+            "Destinasi": "Lapangan Merdeka",
+            "Tanggal": "20/12/2027",
+            "Durasi": "1 Minggu",
             "Budget": "4000000",
-            "Cerita": "begitulah",
-            "Rating": "4"
-        },
-        {
-            "Nama": "test",
-            "Nama Perjalanan": "Balikpapan-Samarinda",
-            "Destinasi": "kemana aja",
-            "Tanggal": "29/2/2004",
-            "Durasi": "3 hari",
-            "Budget": "3000000",
-            "Cerita": "wow",
+            "Cerita": "Seru",
             "Rating": "5"
         }
     ]
